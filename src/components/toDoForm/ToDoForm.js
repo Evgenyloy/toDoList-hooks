@@ -1,16 +1,17 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const ToDoForm = ({ onAddTask, onClearAll }) => {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState('');
 
   const onValueChange = (e) => {
-    setInput(e.target.value)
-  }
+    setInput(e.target.value);
+  };
   const onSubmitTask = (e) => {
-    e.preventDefault()
-    onAddTask(input)
-    setInput('')
-  }
+    e.preventDefault();
+    onAddTask(input);
+    setInput('');
+  };
 
   return (
     <form action="#" className="todo__form" name="form" onSubmit={onSubmitTask}>
@@ -32,7 +33,12 @@ const ToDoForm = ({ onAddTask, onClearAll }) => {
         </div>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default ToDoForm
+ToDoForm.propTypes = {
+  onAddTask: PropTypes.func,
+  onClearAll: PropTypes.func,
+};
+
+export default ToDoForm;
