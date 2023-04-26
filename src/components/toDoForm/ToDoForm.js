@@ -1,16 +1,34 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { addTask, clearAll } from '../slice/toDoSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
-const ToDoForm = ({ onAddTask, onClearAll }) => {
+const ToDoForm = () => {
   const [input, setInput] = useState('');
 
   const onValueChange = (e) => {
     setInput(e.target.value);
   };
+  const state = useSelector((state) => state.toDo.ids);
+
+  const dispath = useDispatch();
+
   const onSubmitTask = (e) => {
+    if (!input) return;
     e.preventDefault();
-    onAddTask(input);
+    const newTask = {
+      id: uuidv4(),
+      task: input,
+      done: false,
+    };
+    dispath(addTask(newTask));
     setInput('');
+  };
+
+  const onClearAll = () => {
+    if (state.length === 0) return;
+    dispath(clearAll());
   };
 
   return (
